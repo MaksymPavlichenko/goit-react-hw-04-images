@@ -1,0 +1,22 @@
+.button {
+    padding: 8px 16px;
+    border-radius: 2px;
+    background-color: #FFD100;
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    min-width: 180px;
+}
+  
+.button:hover,
+.button:focus {
+    background-color: #0082D1;
+}
+
+  
