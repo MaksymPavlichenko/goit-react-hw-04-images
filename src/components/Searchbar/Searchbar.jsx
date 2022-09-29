@@ -1,44 +1,36 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './Searchbar.module.css';
 
 
-export class Searchbar extends Component {
-    static propTypes = {
-        onSubmit: PropTypes.func.isRequired,
+export const Searchbar = ({ onSubmit }) => {
+    const [query, setQuery] = useState('');
+
+    const userInput = e => {
+      setQuery(e.currentTarget.value);
     };
 
-    state = {
-        query: '',
-    };
-
-    userInput = e => {
-        this.setState({ query: e.currentTarget.value });
-    };
-
-    userSubmit = e => {
-        const { query } = this.state;
+    const userSubmit = e => {
         e.preventDefault();
         if (!query.trim()) {
             alert('enter valid search request');
             return;
         }
-        this.props.onSubmit(query);
-        this.setState({ query: '' });
+        onSubmit(query);
+        setQuery(query);
     };
 
-    render() {
-        const { query } = this.state;
+
         return (
           <header className={styles.Searchbar}>
-            <form className={styles.SearchForm} onSubmit={this.userSubmit}>
+            <form className={styles.SearchForm} onSubmit={userSubmit}>
               <button type="submit" className={styles.SearchFormButton}>
                 <span className={styles.ButtonLabel}>Search</span>
               </button>
               <input
                 name="query"
                 value={query}
-                onChange={this.userInput}
+                onChange={userInput}
                 className={styles.SearchFormInput}
                 type="text"
                 autoComplete="off"
@@ -48,5 +40,8 @@ export class Searchbar extends Component {
             </form>
           </header>
         );
-    }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

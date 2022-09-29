@@ -1,28 +1,24 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Modal } from './Modal/Modal';
 
-export class App extends Component {
-  state = {
-    image: '',
-    query: '',
+export const App = () => {
+  const [image, setImage] = useState('');
+  const [query, setQuery] = useState('');
+
+  const modalIsOpen = img => {
+    setImage(img);
   };
 
-  modalIsOpen = img => {
-    this.setState({ image: img });
+  const modalIsClose = () => {
+    setImage('');
   };
 
-  modalIsClose = () => {
-    this.setState({ image: '' });
+  const form = query => {
+    setQuery(query);
   };
 
-  form = query => {
-    this.setState({ query });
-  };
-
-  render() {
-    const { image, query } = this.state;
     return (
       <>
         <div
@@ -33,14 +29,14 @@ export class App extends Component {
             paddingBottom: '24px',
           }}
         >
-          <Searchbar onSubmit={this.form} />
+          <Searchbar onSubmit={form} />
           <ImageGallery
             query={query}
-            handlerOpenModal={this.modalIsOpen}
+            handlerOpenModal={modalIsOpen}
           />
-          {image && <Modal image={image} onClose={this.modalIsClose} />}
+          {image && <Modal image={image} onClose={modalIsClose} />}
         </div>
       </>
     );
-  }
+
 }
